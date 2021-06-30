@@ -22,7 +22,7 @@ namespace Mondol.FileService.Db
             switch (opt.DbType)
             {
                 case DatabaseType.MySql:
-                    _conn = new MySql.Data.MySqlClient.MySqlConnection(opt.MasterConnectionString);
+                    _conn = new MySqlConnector.MySqlConnection(opt.MasterConnectionString);
                     break;
                 case DatabaseType.SqlServer:
                     _conn = new System.Data.SqlClient.SqlConnection(opt.MasterConnectionString);
