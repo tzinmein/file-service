@@ -221,7 +221,7 @@ namespace Mondol.FileService.Controllers
             }
             catch (Exception ex)
             {
-                Logger.LogError(nameof(DownloadAsync), ex.ToString());
+                Logger.LogError($"{nameof(DownloadAsync)}\n{ex}");
                 return StatusCode(500, ex.Message);
             }
         }

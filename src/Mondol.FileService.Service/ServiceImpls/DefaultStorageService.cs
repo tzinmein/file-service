@@ -216,7 +216,7 @@ namespace Mondol.FileService.Service
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError($"{nameof(DeleteFileAsync)}({dirPath})", ex);
+                        _logger.LogError($"{nameof(DeleteFileAsync)}({dirPath})\n{ex}");
                     }
                 }
             });
