@@ -17,11 +17,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="LICENSE" />
     <None Remove="StartApp.bat" />
     <None Remove="Swagger\DocDesc.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="LICENSE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="StartApp.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
