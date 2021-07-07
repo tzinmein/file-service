@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Description>Mondol.FileService.Sdk.Server</Description>
     <Company>Mondol Studio</Company>
     <Authors>Frank</Authors>
@@ -25,10 +25,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="1.1.2" />
-    <PackageReference Include="Mondol" Version="6.0.1" />
-    <PackageReference Include="Mondol.Net.Http" Version="1.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.*" />
+    <PackageReference Include="Mondol" Version="6.0.*" />
+    <PackageReference Include="Mondol.Net.Http" Version="1.3.*" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.*" />
   </ItemGroup>
 
   <ItemGroup>

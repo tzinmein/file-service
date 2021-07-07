@@ -4,8 +4,8 @@
 // Email:   frank@mondol.info
 // Created: 2016-11-17
 // 
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Mondol.WebPlatform
 {
@@ -17,7 +17,7 @@ namespace Mondol.WebPlatform
         /// <summary>
         /// 获取配置文件根目录
         /// </summary>
-        public static string GetConfigPath(this IHostingEnvironment env)
+        public static string GetConfigPath(this IWebHostEnvironment env)
         {
             return Path.Combine(env.ContentRootPath, "confs");
         }

@@ -7,14 +7,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Xml.XPath;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Mondol.WebPlatform.Swagger
 {
+
     public class XmlCommentManager
     {
         private readonly List<XPathNavigator> _xmlDocs;
@@ -22,7 +21,7 @@ namespace Mondol.WebPlatform.Swagger
         public XmlCommentManager(IOptions<SwaggerGenOptions> options)
         {
             var xmlDocs = GetXmlDocFactories(options.Value);
-            _xmlDocs = xmlDocs.Select(p => p().CreateNavigator()).ToList();
+            _xmlDocs = xmlDocs.Select(p => p.CreateNavigator()).ToList();
         }
 
         public string GetTypeSummary(string typeFullName)
@@ -60,11 +59,11 @@ namespace Mondol.WebPlatform.Swagger
             return lstRetn;
         }
 
-        private static IList<Func<XPathDocument>> GetXmlDocFactories(SwaggerGenOptions options)
+        private static IList<XPathDocument> GetXmlDocFactories(SwaggerGenOptions options)
         {
-            var type = options.GetType();
-            var fi = type.GetField("_xmlDocFactories", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
-            return fi.GetValue(options) as IList<Func<XPathDocument>>;
+            var xPathDocList = new List<XPathDocument>();
+            options.SchemaFilterDescriptors.Where(action => action.Type == typeof(XmlCommentsSchemaFilter)).ToList().ForEach(des => des.Arguments.ToList().ForEach(doc => xPathDocList.Add(doc as XPathDocument)));
+            return xPathDocList;
         }
     }
 }

@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Mondol.WebPlatform.Swagger;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Mondol.WebPlatform.Swagger
@@ -16,7 +9,7 @@ namespace Mondol.WebPlatform.Swagger
     /// </summary>
     public class AppendApiNameOperationFilter : IOperationFilter
     {
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var actionName = ((ControllerActionDescriptor)context.ApiDescription.ActionDescriptor).ActionName;
             if (actionName.EndsWith("Async"))

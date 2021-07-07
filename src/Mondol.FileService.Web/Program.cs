@@ -4,15 +4,16 @@
 // Email:   frank@mondol.info
 // Created: 2016-11-17
 // 
-using System;
-using System.IO;
-using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Mondol.Extensions.Logging;
 using Mondol.WebPlatform;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Mondol.FileService
 {
@@ -26,7 +27,7 @@ namespace Mondol.FileService
             {
                 var webHost = BuildWebHost(args);
 
-                var hostEnv = webHost.Services.GetRequiredService<IHostingEnvironment>();
+                var hostEnv = webHost.Services.GetRequiredService<IWebHostEnvironment>();
                 if (!Directory.Exists(hostEnv.GetConfigPath()))
                 {
                     Console.WriteLine("Unable to detect the confs path");
@@ -52,7 +53,7 @@ namespace Mondol.FileService
         private static IWebHost BuildWebHost(string[] args)
         {
             var builder = new WebHostBuilder()
-                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseContentRoot(AppDomain.CurrentDomain.BaseDirectory)
                 .ConfigureAppConfiguration((hostCtx, cfg) =>
                 {
                     cfg.AddEnvironmentVariables();
@@ -63,9 +64,9 @@ namespace Mondol.FileService
 
                     var env = hostCtx.HostingEnvironment;
                     cfg.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                    cfg.AddJsonFile("image-sizes.json", optional: false, reloadOnChange: true);
-                    cfg.AddJsonFile("mimes.json", optional: false, reloadOnChange: true);
+                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile("image-sizes.json", optional: false, reloadOnChange: true)
+                    .AddJsonFile("mimes.json", optional: false, reloadOnChange: true);
 
                     if (env.IsDevelopment())
                     {

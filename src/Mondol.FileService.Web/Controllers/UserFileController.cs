@@ -4,13 +4,6 @@
 // Email:   frank@mondol.info
 // Created: 2016-11-17
 // 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +12,16 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Mondol.FileService.Authorization;
 using Mondol.FileService.Authorization.Codecs;
-using Mondol.Security.Cryptography.Utils;
-using Mondol.FileService.Db;
-using Mondol.FileService.Db.Entities;
 using Mondol.FileService.Db.Repositories;
-using Mondol.FileService.Filters;
 using Mondol.FileService.Models.Result;
-using Mondol.FileService.Options;
 using Mondol.FileService.Service;
 using Mondol.FileService.Service.Models;
 using Mondol.FileService.Web.Models.Input.User;
-using Mondol.IO.Utils;
-using File = Mondol.FileService.Db.Entities.File;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Mondol.FileService.Controllers
 {
@@ -69,6 +60,17 @@ namespace Mondol.FileService.Controllers
         }
 
         /// <summary>
+        /// 上传文件（Base64）
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("UploadByBase64")]
+        public Task<DataResult<UploadResultData>> UploadByBase64Async(UploadFileInputBase64 model)
+        {
+            return UploadAsync(model.ToUploadFileInput());
+        }
+
+        /// <summary>
         /// 上传文件
         /// </summary>
         /// <remarks>
@@ -80,7 +82,7 @@ namespace Mondol.FileService.Controllers
         /// 4. 如果本文件之前没人传过，则errCode=100
         ///    1. 再次调用本接口，传file参数，不传hash参数（传也会忽略）
         /// </remarks>
-        [HttpPost]
+        [HttpPost("Upload")]
         public Task<DataResult<UploadResultData>> UploadAsync(UploadFileInput model)
         {
             /*

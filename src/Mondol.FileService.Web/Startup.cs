@@ -4,41 +4,35 @@
 // Email:   frank@mondol.info
 // Created: 2016-11-17
 // 
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Mondol.AutoReview.AspNetCore;
 using Mondol.AutoReview.AspNetCore.Asserts;
 using Mondol.FileService.Authorization;
 using Mondol.FileService.Authorization.Codecs;
 using Mondol.FileService.Authorization.Codecs.Impls;
-using Mondol.FileService.Authorization.Options;
-using Mondol.FileService.Db;
 using Mondol.FileService.Db.Options;
 using Mondol.FileService.Filters;
 using Mondol.FileService.Options;
-using Mondol.FileService.Service.Options;
 using Mondol.FileService.Service;
+using Mondol.FileService.Service.Options;
 using Mondol.FileService.Service.ServiceImpls;
 using Mondol.FileService.Web.Options;
 using Mondol.WebPlatform.Swagger;
-using Mondol.WebPlatform;
-using Newtonsoft.Json;
-using NLog.Extensions.Logging;
 
 namespace Mondol.FileService
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _cfg;
 
-        public Startup(IConfiguration cfg, IHostingEnvironment env)
+        public Startup(IConfiguration cfg, IWebHostEnvironment env)
         {
             _cfg = cfg;
             _env = env;
@@ -50,7 +44,7 @@ namespace Mondol.FileService
             {
                 opt.AppSecret = _cfg["General:AppSecret"];
             });
-            
+
             services.AddSingleton<IFileTokenCodec, FileTokenCodec>();
 
             services.AddSingleton<IMimeProvider, MimeProvider>();
@@ -79,23 +73,25 @@ namespace Mondol.FileService
 
             services.AddMvc(opt =>
             {
+                opt.EnableEndpointRouting = false;
                 opt.Filters.Add<ValidateModelAttribute>();
             }).AddJsonOptions(opt =>
             {
-                var setts = opt.SerializerSettings;
-                setts.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
-                setts.DateFormatHandling = DateFormatHandling.IsoDateFormat;
-                setts.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ssK";
+                //var setts = opt.SerializerSettings;
+                //setts.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+                //setts.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                //setts.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ssK";
             });
 
             services.AddCors(opt =>
             {
-                opt.AddPolicy("AllowAny", b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
+                // The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the CORS policy by listing individual origins if credentials needs to be supported.
+                opt.AddPolicy("AllowAny", b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()/*.AllowCredentials()*/);
             });
 
             if (_env.IsDevelopment())
                 services.AddSwaggerService(PlatformServices.Default.Application.ApplicationBasePath);
-            
+
             //确保服务依赖的正确性，放到所有注册服务代码后调用
             if (_env.IsDevelopment())
             {
@@ -117,7 +113,7 @@ namespace Mondol.FileService
 #endif
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -129,7 +125,7 @@ namespace Mondol.FileService
             {
                 app.UseExceptionHandler(new GlobalExceptionHandlerOptions());
             }
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -138,6 +134,6 @@ namespace Mondol.FileService
             });
             app.UseStaticFiles();
             app.UseStatusCodePages("text/html", "<div>There is a problem with the page you're visiting, StatusCode: {0}</div>");
-        }        
+        }
     }
 }
