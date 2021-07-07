@@ -18,12 +18,12 @@ namespace Mondol.FileService.Web.Models.Input.User
     public class UploadFileInputBase64 : BaseOwnerTokenInput
     {
         /// <summary>
-        /// 文件名（包含扩展名），不传则从文件流中读取。例如：test.jpg
+        /// 文件名（包含扩展名）。例如：test.jpg
         /// </summary>
         [Required]
         public string FileName { get; set; }
         /// <summary>
-        /// 待上传的文件流
+        /// 待上传的文件内容（Base64格式）
         /// </summary>
         [Required]
         public string File { get; set; }

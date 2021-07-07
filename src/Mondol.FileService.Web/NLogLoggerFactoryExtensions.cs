@@ -38,6 +38,12 @@ namespace Mondol.Extensions.Logging
             if (string.IsNullOrEmpty(logsDir))
                 logsDir = Path.Combine(env.ContentRootPath, "logs");
 
+            const string appDirFlag = "/var/";
+            if (logsDir.StartsWith(appDirFlag))
+            {
+                logsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, logsDir[appDirFlag.Length..]).Replace('\\', '/');
+            }
+
             NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(nlogCfgFile);
             NLog.LogManager.Configuration.Variables["logs-dir"] = logsDir;
         }
