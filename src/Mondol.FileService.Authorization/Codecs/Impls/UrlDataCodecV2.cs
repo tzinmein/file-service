@@ -1,23 +1,21 @@
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
+// 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Mondol.FileService.Authorization.Codecs.Impls
 {
     /// <summary>
-    /// URL承载的数据编解码器
+    /// Data codec carried by URL
     /// </summary>
     public class UrlDataCodecV2 : IUrlDataCodec
     {
         /// <summary>
-        /// 容器版本，从1-9, A-Z,a-z 依次递增(ASCII码越来越大)
+        /// Container version, increasing from 1-9, A-Z, a-z (ASCII code is getting bigger and bigger)
         /// </summary>
         public const char CurrentVersion = '2';
-
-        private readonly Regex _rexBase64Enc = new Regex(@"[\+/=]", RegexOptions.Singleline | RegexOptions.Compiled);
-        private readonly Regex _rexBase64Dec = new Regex(@"[~\-]", RegexOptions.Singleline | RegexOptions.Compiled);
 
         public string Encode(byte[] data)
         {
@@ -28,12 +26,16 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
         public byte[] Decode(string encedStr)
         {
             if (encedStr == null || encedStr.Length < 2)
+            {
                 throw new ArgumentException(nameof(encedStr));
+            }
             if (encedStr[0] != CurrentVersion)
+            {
                 throw new NotSupportedException("bad container version");
+            }
 
-            //去掉版本号，从第2个字符开始替换
-            encedStr = encedStr.Substring(1);
+            //Remove the version number and replace from the second character
+            encedStr = encedStr[1..];
             encedStr = encedStr.Replace('-', '+').Replace('~', '/');
             if (encedStr.Length % 4 > 0)
             {

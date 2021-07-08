@@ -3,24 +3,25 @@
 // Author:  frank
 // Email:   frank@mondol.info
 // Created: 2016-11-17
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
 // 
+
+using Microsoft.Extensions.Options;
+using Mondol.FileService.Authorization.Options;
+using Mondol.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
-using Microsoft.Extensions.Options;
-using Mondol.FileService.Authorization;
-using Mondol.FileService.Authorization.Codecs;
-using Mondol.FileService.Authorization.Options;
-using Mondol.Utils;
 
 namespace Mondol.FileService.Authorization.Codecs.Impls
 {
     public class FileTokenCodec : IFileTokenCodec
     {
         private readonly byte[] _appSecretBytes;
-        public const byte CurrentVersion = 2;
         private readonly IUrlDataCodec _urlDataCodec;
+
+        public byte CurrentVersion => 2;
 
         public FileTokenCodec(IOptions<AuthOption> tokenOpt, IUrlDataCodec urlDataCodec)
         {
@@ -34,12 +35,14 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
             var fileIdBys = NetBitConverter.GetBytes(token.FileId);
             var ownerIdBys = NetBitConverter.GetBytes(token.FileOwnerId);
             var mimeBys = NetBitConverter.GetBytes(token.MimeId);
-            var expireTimeBys = GetBytes(token.ExpireTime);
-            var fileCreateTimeBys = GetBytes(token.FileCreateTime);
+            var expireTimeBys = IFileTokenCodec.Datetime2Bytes(token.ExpireTime);
+            var fileCreateTimeBys = IFileTokenCodec.Datetime2Bytes(token.FileCreateTime);
 
             var lstLen = 1 + pseudoIdBys.Length + fileIdBys.Length + ownerIdBys.Length + mimeBys.Length + expireTimeBys.Length + fileCreateTimeBys.Length;
-            var mdatLst = new List<byte>(lstLen);
-            mdatLst.Add(CurrentVersion);
+            var mdatLst = new List<byte>(lstLen)
+            {
+                CurrentVersion
+            };
             mdatLst.AddRange(pseudoIdBys);
             mdatLst.AddRange(fileIdBys);
             mdatLst.AddRange(ownerIdBys);
@@ -49,11 +52,11 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
 
             var mdatBys = mdatLst.ToArray();
 
-            //签名
+            //Sign
             var signBys = ArrayUtil.Addition(_appSecretBytes, mdatBys);
-            var hashBys = Md5(signBys);
+            var hashBys = IFileTokenCodec.CalcHash(signBys);
 
-            //编码成字符串
+            //Encode to a string
             var encBys = ArrayUtil.Addition(hashBys, mdatBys);
             return _urlDataCodec.Encode(encBys);
         }
@@ -62,20 +65,23 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
         {
             var encBys = _urlDataCodec.Decode(tokenStr);
 
-            //校验签名
-            var hashLen = 16;
-            var mdatBys = new byte[encBys.Length - hashLen];
-            Array.Copy(encBys, hashLen, mdatBys, 0, mdatBys.Length);
+            //Verify signature
+            var mdatBys = new byte[encBys.Length - IFileTokenCodec.HashLen];
+            Array.Copy(encBys, IFileTokenCodec.HashLen, mdatBys, 0, mdatBys.Length);
             var signBys = ArrayUtil.Addition(_appSecretBytes, mdatBys);
-            var hashBys = Md5(signBys);
-            if (!ArrayUtil.Equals(hashBys, 0, encBys, 0, hashLen))
+            var hashBys = IFileTokenCodec.CalcHash(signBys);
+            if (!ArrayUtil.Equals(hashBys, 0, encBys, 0, IFileTokenCodec.HashLen))
+            {
                 throw new InvalidDataException("bad sign");
+            }
 
             if (mdatBys[0] != CurrentVersion)
+            {
                 throw new NotSupportedException("bad token version");
+            }
 
-            //解析成对象
-            var index = 1; //忽略版本
+            //Resolve to object
+            var index = 1; //Ignore version
             var pseudoId = NetBitConverter.ToUInt32(mdatBys, index);
             index += 4;
             var fileId = NetBitConverter.ToInt32(mdatBys, index);
@@ -84,9 +90,9 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
             index += 4;
             var mimeId = NetBitConverter.ToUInt32(mdatBys, index);
             index += 4;
-            var expireTime = ToDateTime(mdatBys, index);
+            var expireTime = IFileTokenCodec.Bytes2DateTime(mdatBys, index);
             index += sizeof(long);
-            var fileCreateTime = ToDateTime(mdatBys, index);
+            var fileCreateTime = IFileTokenCodec.Bytes2DateTime(mdatBys, index);
 
             return new FileToken
             {
@@ -97,30 +103,6 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
                 ExpireTime = expireTime,
                 FileCreateTime = fileCreateTime
             };
-        }
-
-        private static byte[] GetBytes(DateTime dt)
-        {
-            return NetBitConverter.GetBytes(dt.ToBinary());
-        }
-
-        private static DateTime ToDateTime(byte[] bytes, int startIndex)
-        {
-            var l = NetBitConverter.ToInt64(bytes, startIndex);
-            return DateTime.FromBinary(l);
-        }
-
-        private static byte[] Md5(byte[] bytes)
-        {
-            return Md5(bytes, 0, bytes.Length);
-        }
-
-        private static byte[] Md5(byte[] bytes, int offset, int count)
-        {
-            using (var hashAlgo = MD5.Create())
-            {
-                return hashAlgo.ComputeHash(bytes, offset, count);
-            }
         }
     }
 }

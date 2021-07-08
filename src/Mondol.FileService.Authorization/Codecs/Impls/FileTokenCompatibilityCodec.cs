@@ -1,7 +1,8 @@
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
+// 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mondol.FileService.Authorization.Codecs.Impls
 {
@@ -13,6 +14,8 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
         public FileTokenCompatibilityCodec()
         {
         }
+
+        public byte CurrentVersion => throw new NotImplementedException();
 
         public FileToken Decode(string tokenStr)
         {

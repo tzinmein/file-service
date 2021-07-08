@@ -3,33 +3,16 @@
 // Author:  frank
 // Email:   frank@mondol.info
 // Created: 2016-11-17
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
 // 
 
 namespace Mondol.FileService.Authorization.Codecs
 {
     /// <summary>
-    /// FileToken编解码器
+    /// FileToken codec
     /// </summary>
-    public interface IFileTokenCodec
+    public interface IFileTokenCodec : ITokenCodec<FileToken>
     {
-        string Encode(FileToken token);
-        FileToken Decode(string tokenStr);
-    }
-
-    public static class FileTokenCodecExtensions
-    {
-        public static bool TryDecode(this IFileTokenCodec codec, string tokenStr, out FileToken token)
-        {
-            try
-            {
-                token = codec.Decode(tokenStr);
-                return true;
-            }
-            catch
-            {
-                token = null;
-                return false;
-            }
-        }
     }
 }

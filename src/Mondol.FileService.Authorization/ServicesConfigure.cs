@@ -3,38 +3,41 @@
 // Author:  frank
 // Email:   frank@mondol.info
 // Created: 2017-01-24
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
 // 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.Extensions.DependencyInjection;
 using Mondol.FileService.Authorization.Codecs;
 using Mondol.FileService.Authorization.Codecs.Impls;
 using Mondol.FileService.Authorization.Options;
+using System;
 
 namespace Mondol.FileService.Authorization
 {
     /// <summary>
-    /// FileService的IServiceCollection扩展
+    /// FileService's IServiceCollection extension
     /// </summary>
     public static class ServiceConfigure
     {
         /// <summary>
-        /// 添加FileService.Sdk.Server的相关服务
+        /// Add FileService.Sdk.Server related services
         /// </summary>
-        public static void AddAuthorization(IServiceCollection services)
+        public static IServiceCollection AddAuthorization(this IServiceCollection services)
         {
-            services.AddSingleton<IOwnerTokenCodec, OwnerTokenCodec>();
-            services.AddSingleton<IUrlDataCodec, UrlDataCompatibilityCodec>();
-            services.AddSingleton<AppSecretSigner>();
+            services.AddSingleton<IOwnerTokenCodec, OwnerTokenCodec>()
+                    .AddSingleton<IUrlDataCodec, UrlDataCompatibilityCodec>()
+                    .AddSingleton<AppSecretSigner>();
+
+            return services;
         }
 
-        public static void AddAuthorization(IServiceCollection services, Action<AuthOption> configure)
+        /// <summary>
+        /// Add FileService.Sdk.Server related services
+        /// </summary>
+        public static IServiceCollection AddAuthorization(this IServiceCollection services, Action<AuthOption> configure)
         {
-            AddAuthorization(services);
-
-            services.Configure(configure);
+            return services.AddAuthorization().Configure(configure);
         }
     }
 }
