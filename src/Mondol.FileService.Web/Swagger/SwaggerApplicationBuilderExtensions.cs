@@ -4,9 +4,12 @@
 // Email:   frank@mondol.info
 // Created: 2016-12-12
 // 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Linq;
-using Microsoft.AspNetCore.Builder;
 
 namespace Mondol.WebPlatform.Swagger
 {
@@ -21,7 +24,7 @@ namespace Mondol.WebPlatform.Swagger
                 opts.RouteTemplate = "docs/apis/{documentName}/schema.json";
                 opts.PreSerializeFilters.Add((sDoc, httpReq) =>
                 {
-                    var docName = (string)sDoc.Info.Extensions["docName"];
+                    var docName = ((OpenApiString)sDoc.Info.Extensions["docName"]).Value;
                     string prefix;
                     switch (docName)
                     {
@@ -34,8 +37,15 @@ namespace Mondol.WebPlatform.Swagger
                         default:
                             throw new NotSupportedException("不支持的DocName：" + docName);
                     }
-                    sDoc.Paths = sDoc.Paths.Where(p => p.Key.StartsWith(prefix)).ToDictionary(p => p.Key, p => p.Value);
-                });                
+
+                    var dict = sDoc.Paths.Where(p => p.Key.StartsWith(prefix));
+                    var newPaths = new OpenApiPaths();
+                    foreach (var kv in dict)
+                    {
+                        newPaths.Add(kv.Key, kv.Value);
+                    }
+                    sDoc.Paths = newPaths;
+                });
             });
             app.UseSwaggerUI(opts =>
             {

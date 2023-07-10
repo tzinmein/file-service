@@ -8,12 +8,50 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace Mondol.FileService.Web.Models.Input.User
 {
+    public class UploadFileInputBase64 : BaseOwnerTokenInput
+    {
+        /// <summary>
+        /// 文件名（包含扩展名）。例如：test.jpg
+        /// </summary>
+        [Required]
+        public string FileName { get; set; }
+        /// <summary>
+        /// 待上传的文件内容（Base64格式）
+        /// </summary>
+        [Required]
+        public string File { get; set; }
+        /// <summary>
+        /// 待上传文件的SHA1值。例如：c64376a0d4677f0d4df563fe23f0c8239a45c17d
+        /// </summary>
+        public string Hash { get; set; }
+
+        /// <summary>
+        /// 链接有效期（分钟）,0则不过期
+        /// </summary>
+        [DefaultValue(0)]
+        public int PeriodMinute { get; set; } = 0;
+
+        public UploadFileInput ToUploadFileInput()
+        {
+            var fs = new MemoryStream(System.Convert.FromBase64String(File));
+            return new UploadFileInput
+            {
+                FileName = FileName,
+                Hash = Hash,
+                OwnerToken = OwnerToken,
+                PeriodMinute = PeriodMinute,
+                File = new FormFile(fs, 0, fs.Length, FileName, FileName)
+            };
+        }
+    }
+
     public class UploadFileInput : BaseOwnerTokenInput
     {
         /// <summary>

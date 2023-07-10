@@ -4,12 +4,13 @@
 // Email:   frank@mondol.info
 // Created: 2016-12-12
 // 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Mondol.WebPlatform.Swagger
 {
@@ -22,38 +23,38 @@ namespace Mondol.WebPlatform.Swagger
         {
             services.AddSwaggerGen(options =>
             {
-                options.DescribeStringEnumsInCamelCase();
+                options.DescribeAllParametersInCamelCase();
 
                 var clientDocDesc = ReadAllText("Swagger/DocDesc.txt");
                 var serverDocDesc = clientDocDesc + "\r\n\r\n6. 本文档中所有接口均采用IP白名单授权";
-                options.SwaggerDoc("client", new Info()
+                options.SwaggerDoc("client", new OpenApiInfo()
                 {
                     Version = "v1",
                     Title = "文件服务客户端API接口文档",
                     Description = clientDocDesc,
-                    Contact = new Contact()
+                    Contact = new OpenApiContact()
                     {
                         Name = "Frank",
                         Email = "frank@mondol.info"
                     },
                     Extensions =
                     {
-                        ["docName"] = "client"
+                        ["docName"] = new OpenApiString("client")
                     }
                 });
-                options.SwaggerDoc("server", new Info()
+                options.SwaggerDoc("server", new OpenApiInfo()
                 {
                     Version = "v1",
                     Title = "文件服务服务端API接口文档",
                     Description = serverDocDesc,
-                    Contact = new Contact()
+                    Contact = new OpenApiContact()
                     {
                         Name = "Frank",
                         Email = "frank@mondol.info"
                     },
                     Extensions =
                     {
-                        ["docName"] = "server"
+                        ["docName"] = new OpenApiString("server")
                     }
                 });
 
@@ -70,14 +71,9 @@ namespace Mondol.WebPlatform.Swagger
                 options.CustomSchemaIds(SchemeIdGen.SchemaIdSelector);
 
                 options.OperationFilter<FixTagsDocOperationFilter>();
-                options.DocumentFilter<FixEnumOperationFilter>();
-                options.OperationFilter<FixEnumOperationFilter>();
                 options.DocumentFilter<FixRequiredOperationFilter>();
                 options.OperationFilter<FixRequiredOperationFilter>();
-                options.OperationFilter<FixDefaultValueOperationFilter>();
                 options.OperationFilter<AppendApiNameOperationFilter>();
-                options.OperationFilter<FixFormFileOperationFilter>();
-                options.OperationFilter<FixContentTypeOperationFilter>();
 
                 //此段代码用于查找Swagger.XmlCommentsOperationFilter报NullReferenceException的产生源
                 //产生原因为在Action里声明了URL变量，但Action参数里未声明

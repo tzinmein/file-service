@@ -1,6 +1,7 @@
-using System;
-using System.Collections.Generic;
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
+//
+
 using System.Runtime.CompilerServices;
-using System.Text;
 
 [assembly: InternalsVisibleTo("FileServiceTests")]

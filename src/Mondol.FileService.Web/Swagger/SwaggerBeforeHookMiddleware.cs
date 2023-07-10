@@ -82,8 +82,8 @@ namespace Mondol.WebPlatform.Swagger
                 else
                 {
                     var dmd = new DefaultMetadataDetails(
-                        ModelMetadataIdentity.ForProperty(pi.PropertyType, pi.Name, modelType),
-                        new ModelAttributes(new object[0]))
+                        ModelMetadataIdentity.ForProperty(pi, pi.PropertyType, modelType),
+                        ModelAttributes.GetAttributesForProperty(modelType, pi))
                     {
                         ValidationMetadata = new ValidationMetadata()
                         {

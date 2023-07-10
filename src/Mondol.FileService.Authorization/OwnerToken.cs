@@ -3,23 +3,27 @@
 // Author:  frank
 // Email:   frank@mondol.info
 // Created: 2017-01-23
-// 
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
+//
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mondol.FileService.Authorization
 {
     /// <summary>
-    /// 包含文件所有者身份信息的访问令牌
+    /// Access token containing the identity information of the file owner
     /// </summary>
-    public class OwnerToken
+    public class OwnerToken : TokenBase
     {
+        /// <summary>
+        /// OwnerType field of FileOwner table
+        /// </summary>
         public int OwnerType { get; set; }
-        public int OwnerId { get; set; }
-        public DateTime ExpireTime { get; set; }
 
-        public bool IsExpired => ExpireTime <= DateTime.Now;
+        /// <summary>
+        /// Id field of FileOwner table
+        /// </summary>
+        public int OwnerId { get; set; }
     }
 }

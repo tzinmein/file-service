@@ -1,5 +1,7 @@
-using System;
-using System.Collections.Generic;
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
+// 
+
 using System.Text;
 
 namespace Mondol.FileService.Authorization.Options
@@ -7,7 +9,7 @@ namespace Mondol.FileService.Authorization.Options
     public class AuthOption
     {
         /// <summary>
-        /// 与FileService间通信秘钥
+        /// Communication key with FileService
         /// </summary>
         public string AppSecret { get; set; }
 

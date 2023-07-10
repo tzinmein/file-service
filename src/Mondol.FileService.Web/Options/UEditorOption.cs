@@ -14,7 +14,7 @@ namespace Mondol.FileService.Web.Options
     {
         public JObject Items { get; }
 
-        public UEditorOption(IHostingEnvironment hostEnv)
+        public UEditorOption(IWebHostEnvironment hostEnv)
         {
             var cfgPath = Path.Combine(hostEnv.GetConfigPath(), "ueditor.json");
             if (!File.Exists(cfgPath))

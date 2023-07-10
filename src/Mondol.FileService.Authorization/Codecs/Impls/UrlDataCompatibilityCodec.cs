@@ -1,12 +1,13 @@
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
+// 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mondol.FileService.Authorization.Codecs.Impls
 {
     /// <summary>
-    /// IUrlDataCodec兼容新旧版本的实现
+    /// IUrlDataCodec is compatible with the implementation of new and old versions
     /// </summary>
     public class UrlDataCompatibilityCodec : IUrlDataCodec
     {
@@ -21,11 +22,15 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
         public byte[] Decode(string encedStr)
         {
             if (encedStr == null || encedStr.Length < 2)
+            {
                 throw new ArgumentException(nameof(encedStr));
+            }
             if (encedStr[0] == UrlDataCodecV1.CurrentVersion)
+            {
                 return _codecV1.Decode(encedStr);
-            else
-                return _codecV2.Decode(encedStr);
+            }
+
+            return _codecV2.Decode(encedStr);
         }
     }
 }

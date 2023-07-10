@@ -1,18 +1,19 @@
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
+// 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Mondol.FileService.Authorization.Codecs.Impls
 {
     /// <summary>
-    /// URL承载的数据编解码器
+    /// Data codec carried by URL
     /// </summary>
     internal class UrlDataCodecV1 : IUrlDataCodec
     {
         /// <summary>
-        /// 容器版本，从1-9, A-Z,a-z 依次递增(ASCII码越来越大)
+        /// Container version, increasing from 1-9, A-Z, a-z (ASCII code is getting bigger and bigger)
         /// </summary>
         public const char CurrentVersion = '1';
 
@@ -23,43 +24,37 @@ namespace Mondol.FileService.Authorization.Codecs.Impls
         {
             var encStr = System.Convert.ToBase64String(data);
             return CurrentVersion + _rexBase64Enc.Replace(encStr, m =>
-            {
-                switch (m.Value)
+                 m.Value switch
                 {
-                    case "+":
-                        return "_";
-                    case "/":
-                        return "~";
-                    case "=":
-                        return "-";
-                    default:
-                        throw new InvalidOperationException();
+                    "+" => "_",
+                    "/" => "~",
+                    "=" => "-",
+                    _ => throw new InvalidOperationException(),
                 }
-            });
+            );
         }
 
         public byte[] Decode(string encedStr)
         {
             if (encedStr?.Length < 2)
-                throw new ArgumentException(nameof(encedStr));
-            if (encedStr[0] != CurrentVersion)
-                throw new NotSupportedException("bad container version");
-
-            //去掉版本号，从第2个字符开始替换
-            encedStr = _rexBase64Dec.Replace(encedStr, m =>
             {
-                switch (m.Value)
+                throw new ArgumentException(nameof(encedStr));
+            }
+            if (encedStr[0] != CurrentVersion)
+            {
+                throw new NotSupportedException("bad container version");
+            }
+
+            //Remove the version number and replace from the second character
+            encedStr = _rexBase64Dec.Replace(encedStr, m =>
+                 m.Value switch
                 {
-                    case "_":
-                        return "+";
-                    case "~":
-                        return "/";
-                    case "-":
-                        return "=";
-                    default:
-                        throw new InvalidOperationException();
+                    "_" => "+",
+                    "~" => "/",
+                    "-" => "=",
+                    _ => throw new InvalidOperationException(),
                 }
-            });
+            );
 
             return System.Convert.FromBase64String(encedStr.Substring(1));
         }

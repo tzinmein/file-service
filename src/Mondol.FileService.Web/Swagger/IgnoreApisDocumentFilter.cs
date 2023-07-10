@@ -4,15 +4,15 @@
 // Email:   frank@mondol.info
 // Created: 2016-12-12
 // 
-using System;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 
 namespace Mondol.WebPlatform.Swagger
 {
     public class IgnoreApisDocumentFilter : IDocumentFilter
     {
-        public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
+        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {
             throw new NotImplementedException();
         }

@@ -3,18 +3,20 @@
 // Author:  frank
 // Email:   frank@mondol.info
 // Created: 2016-11-19
-// 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
+//
+
 using Microsoft.Extensions.Options;
 using Mondol.FileService.Authorization.Options;
 using Mondol.Security.Cryptography.Utils;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Mondol.FileService.Authorization
 {
     /// <summary>
-    /// AppSecret签名器
+    /// AppSecret Signer
     /// </summary>
     public class AppSecretSigner
     {
@@ -35,10 +37,7 @@ namespace Mondol.FileService.Authorization
 
         public bool Verify(IEnumerable<KeyValuePair<string, object>> values, string sign)
         {
-            var vals = values.OrderBy(p => p.Key).Select(p => p.Value);
-            var appSecret = _opt.Value.AppSecret;
-            var signOriStr = $"{appSecret}|{string.Join("|", vals)}";
-            return HashUtil.Sha1(signOriStr) == sign;
+            return Sign(values) == sign;
         }
-    }    
+    }
 }

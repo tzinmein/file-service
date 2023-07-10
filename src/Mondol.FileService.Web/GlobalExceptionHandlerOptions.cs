@@ -4,17 +4,18 @@
 // Email:   frank@mondol.info
 // Created: 2016-11-17
 // 
-using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Mondol.FileService.Models.Result;
 using Mondol.FileService.Service;
+using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Mondol.FileService
 {
@@ -39,7 +40,7 @@ namespace Mondol.FileService
                     throw new Exception("The response has already started, the error page middleware will not be executed.");
 
                 var svces = context.RequestServices;
-                var env = svces.GetRequiredService<IHostingEnvironment>();
+                var env = svces.GetRequiredService<IWebHostEnvironment>();
                 var ex = context.Features.Get<IExceptionHandlerFeature>().Error;
 
                 var rJson = ex is FriendlyException ? new Result(ResultErrorCodes.Failure, ex.Message) : env.IsDevelopment() ?

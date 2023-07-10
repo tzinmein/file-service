@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Xml.XPath;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Mondol.WebPlatform.Swagger
@@ -23,13 +16,13 @@ namespace Mondol.WebPlatform.Swagger
             _xmlCommentMgr = xmlCommentMgr;
         }
 
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var fullName = ((ControllerActionDescriptor)context.ApiDescription.ActionDescriptor).ControllerTypeInfo.FullName;
             var tagSummary = _xmlCommentMgr.GetTypeSummary(fullName);
             if (!string.IsNullOrEmpty(tagSummary))
             {
-                operation.Tags[0] = tagSummary;
+                operation.Tags[0].Name = $"{operation.Tags[0].Name} - {tagSummary}";
             }
         }
     }

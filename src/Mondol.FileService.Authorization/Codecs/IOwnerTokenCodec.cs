@@ -3,37 +3,16 @@
 // Author:  frank
 // Email:   frank@mondol.info
 // Created: 2017-01-23
+// ---------------------------------------------
+// Refactored by alan.yu @ 2021-07-08
 // 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mondol.FileService.Authorization.Codecs
 {
     /// <summary>
-    /// OwnerToken编解码器
+    /// OwnerToken codec
     /// </summary>
-    public interface IOwnerTokenCodec
+    public interface IOwnerTokenCodec : ITokenCodec<OwnerToken>
     {
-        string Encode(OwnerToken token);
-        OwnerToken Decode(string tokenStr);
-    }
-
-    public static class OwnerTokenCodecExtensions
-    {
-        public static bool TryDecode(this IOwnerTokenCodec codec, string tokenStr, out OwnerToken token)
-        {
-            try
-            {
-                token = codec.Decode(tokenStr);
-                return true;
-            }
-            catch
-            {
-                token = null;
-                return false;
-            }
-        }
     }
 }
