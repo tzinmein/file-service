@@ -16,6 +16,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using IResult = Mondol.FileService.Models.Result.IResult;
 
 namespace Mondol.FileService
 {
