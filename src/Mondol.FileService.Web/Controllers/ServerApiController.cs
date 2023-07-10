@@ -5,25 +5,20 @@
 // Created: 2016-11-17
 // 
 using System;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Mondol.FileService.Authorization;
 using Mondol.FileService.Authorization.Codecs;
-
-using Mondol.FileService.Db;
 using Mondol.FileService.Db.Entities;
 using Mondol.FileService.Db.Repositories;
 using Mondol.FileService.Models.Result;
 using Mondol.FileService.Options;
 using Mondol.FileService.Service;
-using Mondol.FileService.Service.Models;
 using Mondol.FileService.Web.Models.Input.Server;
 using Mondol.FileService.Web.Models.Output.Server;
 using Microsoft.Extensions.DependencyInjection;
-using Mondol.Net.Http;
 
 namespace Mondol.FileService.Controllers
 {

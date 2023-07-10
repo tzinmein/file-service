@@ -5,8 +5,6 @@
 // Created: 2016-12-12
 // 
 
-using System;
-
 namespace Mondol.FileService.Service.Models.Output
 {
     /// <summary>

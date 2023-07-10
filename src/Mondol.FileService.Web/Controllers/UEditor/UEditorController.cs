@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Mondol.FileService.Service;
 using Mondol.FileService.Web.Options;
-using Mondol.WebPlatform;
 using Newtonsoft.Json;
 using ControllerBase = Mondol.FileService.Controllers.ControllerBase;
 

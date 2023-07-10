@@ -1,12 +1,8 @@
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Mondol.FileService;
 using Microsoft.Extensions.DependencyInjection;
-using Mondol;
-using Mondol.FileService.Authorization.Codecs;
-using Mondol.FileService.Client;
+using Mondol.FileService;
 using Mondol.FileService.Server;
+using System;
+using System.Threading.Tasks;
 
 namespace Test.Console
 {

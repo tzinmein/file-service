@@ -4,10 +4,8 @@
 // Email:   frank@mondol.info
 // Created: 2016-12-13
 // 
-using System.Threading;
+
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Mondol.FileService.Db.Entities;
 using Dapper;
 

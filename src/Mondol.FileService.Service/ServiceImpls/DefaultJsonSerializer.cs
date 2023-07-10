@@ -6,11 +6,9 @@
 // 
 using System;
 using System.IO;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using NJsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Mondol.FileService.Service.ServiceImpls

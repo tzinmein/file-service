@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Mondol.FileService.Db.Entities;
 
 namespace Mondol.FileService.Service.Models

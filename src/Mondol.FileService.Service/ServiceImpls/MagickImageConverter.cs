@@ -5,10 +5,8 @@
 // Created: 2016-11-17
 // 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using ImageMagick;
 using Mondol.FileService.Service.Models;

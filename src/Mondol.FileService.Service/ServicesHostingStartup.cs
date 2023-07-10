@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Mondol.FileService.Authorization;
-using Mondol.FileService.Service;
 using Mondol.FileService.Service.ServiceImpls;
 
 [assembly: HostingStartup(typeof(Mondol.FileService.Service.ServiceHostingStartup))]

@@ -7,16 +7,13 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Mondol.FileService.Authorization;
 using Mondol.FileService.Authorization.Codecs;
 using Mondol.FileService.Db.Entities;
 using Mondol.FileService.Service.Options;
 using Newtonsoft.Json.Linq;
-using Mondol.Net.Http;
 using HttpClient = Mondol.Net.Http.HttpClient;
 
 namespace Mondol.FileService.Service

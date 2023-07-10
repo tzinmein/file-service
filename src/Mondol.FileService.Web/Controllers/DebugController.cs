@@ -11,12 +11,9 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Mondol.FileService.Authorization;
 using Mondol.FileService.Authorization.Codecs;
-using Mondol.FileService.Service;
-using Mondol.FileService.Service.Models;
 
 namespace Mondol.FileService.Controllers
 {

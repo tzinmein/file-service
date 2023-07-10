@@ -6,7 +6,6 @@
 // 
 using System;
 using Microsoft.AspNetCore.Http;
-using Mondol.FileService.Db.Repositories;
 
 namespace Mondol.FileService.Db.Repositories.Impls
 {

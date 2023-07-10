@@ -3,7 +3,6 @@
 // 
 
 using System;
-using System.Text.RegularExpressions;
 
 namespace Mondol.FileService.Authorization.Codecs.Impls
 {

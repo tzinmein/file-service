@@ -11,11 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Mondol.FileService.Authorization;
 using Mondol.FileService.Authorization.Codecs;
-using Mondol.FileService.Filters;
 using Mondol.FileService.Models.Result;
 using Mondol.FileService.Options;
 using Mondol.FileService.Service;
-using Mondol.FileService.Service.Models;
 using Mondol.FileService.Web.Models.Input.User;
 
 namespace Mondol.FileService.Controllers

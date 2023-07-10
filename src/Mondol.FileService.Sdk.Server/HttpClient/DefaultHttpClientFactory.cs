@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using Microsoft.Extensions.Options;
 
 namespace Mondol.FileService.Server

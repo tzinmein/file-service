@@ -5,13 +5,11 @@
 // Created: 2016-11-17
 // 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Mondol.FileService.Authorization;
 using Mondol.FileService.Db.Entities;
 using Mondol.FileService.Db.Options;
 using Mondol.FileService.Db.Repositories;

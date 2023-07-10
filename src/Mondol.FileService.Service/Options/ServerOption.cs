@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Mondol.FileService.Service.Options
 {
     public class ServerOption

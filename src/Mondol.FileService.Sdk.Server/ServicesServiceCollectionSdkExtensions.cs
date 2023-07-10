@@ -5,12 +5,8 @@
 // Created: 2017-01-24
 // 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Mondol.FileService.Authorization;
-using Mondol.FileService.Authorization.Codecs;
 using Mondol.FileService.Authorization.Options;
 
 namespace Mondol.FileService.Server

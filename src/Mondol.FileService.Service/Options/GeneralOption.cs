@@ -4,7 +4,7 @@
 // Email:   frank@mondol.info
 // Created: 2016-11-17
 // 
-using System.Text;
+
 using Mondol.FileService.Authorization.Options;
 
 namespace Mondol.FileService.Service.Options

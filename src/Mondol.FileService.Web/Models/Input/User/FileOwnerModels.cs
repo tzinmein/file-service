@@ -4,13 +4,10 @@
 // Email:   frank@mondol.info
 // Created: 2017-02-01
 // 
-using System;
-using System.Collections.Generic;
+
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace Mondol.FileService.Web.Models.Input.User
