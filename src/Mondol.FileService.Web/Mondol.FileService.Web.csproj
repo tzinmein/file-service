@@ -35,7 +35,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
-    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.*" />
     <PackageReference Include="Mondol" Version="6.0.*" />
     <PackageReference Include="Mondol.AutoReview.AspNetCore" Version="1.0.*" />
     <PackageReference Include="Mondol.Web" Version="1.0.*" />    

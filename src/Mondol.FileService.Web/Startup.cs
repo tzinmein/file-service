@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.PlatformAbstractions;
 using Mondol.AutoReview.AspNetCore;
 using Mondol.AutoReview.AspNetCore.Asserts;
 using Mondol.FileService.Authorization;
@@ -90,7 +89,7 @@ namespace Mondol.FileService
             });
 
             if (_env.IsDevelopment())
-                services.AddSwaggerService(PlatformServices.Default.Application.ApplicationBasePath);
+                services.AddSwaggerService(System.AppContext.BaseDirectory);
 
             //确保服务依赖的正确性，放到所有注册服务代码后调用
             if (_env.IsDevelopment())
