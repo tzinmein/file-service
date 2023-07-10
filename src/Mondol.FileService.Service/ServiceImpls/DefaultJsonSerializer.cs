@@ -19,7 +19,7 @@ namespace Mondol.FileService.Service.ServiceImpls
     {
         private readonly JsonSerializer _serializer;
 
-        public DefaultJsonSerializer(IOptions<MvcJsonOptions> options)
+        public DefaultJsonSerializer(IOptions<MvcNewtonsoftJsonOptions> options)
         {
             var jss = options.Value.SerializerSettings;
             _serializer = JsonSerializer.Create(jss);
