@@ -31,18 +31,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.*" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.*" />
     <PackageReference Include="Mondol" Version="6.0.*" />
     <PackageReference Include="Mondol.AutoReview.AspNetCore" Version="1.0.*" />
     <PackageReference Include="Mondol.Web" Version="1.0.*" />    
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.*" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="8.0.*" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.*" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.1.3" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.2" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
