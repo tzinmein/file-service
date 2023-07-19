@@ -1,7 +1,6 @@
 # file-service
 
-A scalable, general purpose file server based on ASP.NET Core.
-
+A scalable, general purpose file server based on ASP.NET Core.\
 Often back-end projects may have upload/download needs such as avatars, images, audio, video, etc., which can be abstracted into a file service.
 
 _Read this in other languages: [English](README.md), [简体中文](README.zh-cn.md)._
@@ -66,41 +65,41 @@ var url = updResult.Data.Url; //Get the root address of the file
 
 ## Description of URL format
 
-The full URL format looks like this: `https://domain.com/{fileToken}/{handler}/{modifier}`  
-`fileToken`: the unique identifier of the file to be uploaded.  
-`handler`: file handler, can be image, video, raw, etc.  
+The full URL format looks like this: `https://domain.com/{fileToken}/{handler}/{modifier}`\
+`fileToken`: the unique identifier of the file to be uploaded.\
+`handler`: file handler, can be image, video, raw, etc.\
 `modifier`: [optional] file processor parameter, e.g. image processor, can specify 128x128_png
 
 The `file root address (updResult.Data.Url)` returned after a successful file upload is the URL as of `https://domain.com/{fileToken}` The latter part of the URL is spliced by the client according to needs.
 
 ### The following is an example:
 
-Download the original file
-File root address /raw, for example:  
+Download the original file\
+File root address /raw, for example:\
 `http://file.domain.com/files/1iYQTU7fEUgaa~URSVwaCqQKFml_IAAAAAgAAAAbhmsFjiUUQwCPn2ngI1QcvsSp0AA/raw`
 
-Download a 128x128 sized thumbnail (the original file is an image)  
+Download a 128x128 sized thumbnail (the original file is an image)\
 File root address /image/128x128, for example:
 `http://file.domain.com/files/1iYQTU7fEUgaa~URSVwaCqQKFml_IAAAAAgAAAAbhmsFjiUUQwCPn2ngI1QcvsSp0AA/image/128x128`
 
-Download 128 wide, high aspect ratio scaled thumbnail (original file is an image)  
+Download 128 wide, high aspect ratio scaled thumbnail (original file is an image)\
 File root address /image/128x, for example:
 `http://file.domain.com/files/1iYQTU7fEUgaa~URSVwaCqQKFml_IAAAAAgAAAAbhmsFjiUUQwCPn2ngI1QcvsSp0AA/image/128x`
 
-The original image is in JPG format, download the image in png format  
+The original image is in JPG format, download the image in png format\
 File root address /image/raw_png, for example:
 `http://file.domain.com/files/1iYQTU7fEUgaa~URSVwaCqQKFml_IAAAAAgAAAAbhmsFjiUUUQwCPn2ngI1QcvsSp0AA/image/raw_png`
 
-The original image is in JPG format, download a 128x128 sized thumbnail image in png format  
+The original image is in JPG format, download a 128x128 sized thumbnail image in png format\
 File root address /image/128x128_png, for example:
 `http://file.domain.com/files/1iYQTU7fEUgaa~URSVwaCqQKFml_IAAAAAgAAAAbhmsFjiUUQwCPn2ngI1QcvsSp0AA/image/128x128_png`
 
 ## Contact Details
 
-Email: tzinmein@gmail.com
+Email: tzinmein@gmail.com\
 Blog: https://tzin.net
 
 ## Original Author
 
-Email: frank@mondol.info  
+Email: frank@mondol.info\
 cnblogs: http://mondol.cnblogs.com
